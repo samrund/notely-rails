@@ -1,4 +1,6 @@
 class API::V1::APIController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   protected
 
   def authorize_api_key
