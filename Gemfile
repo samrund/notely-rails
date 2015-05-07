@@ -9,6 +9,7 @@ gem 'jquery-rails', '~> 4.0.3'
 gem 'jbuilder', '~> 2.2.13'
 gem 'bcrypt', '~> 3.1.10'
 gem 'bootstrap-sass'
+gem 'font-awesome-sass'
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.1.2'
