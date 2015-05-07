@@ -1,8 +1,10 @@
 class NotesController < ApplicationController
+  before_action :authorize_user
+  before_action :load_notes
   before_action :find_note, only: [:show, :edit, :update, :destroy]
 
   def new
-    @note = Note.new
+    @note = current_user.notes.new
   end
 
   def show
@@ -10,7 +12,7 @@ class NotesController < ApplicationController
   end
 
   def create
-    @note = Note.new note_params
+    @note = current_user.notes.new note_params
     set_flash_for @note.save
     if @note.errors.any?
       render :new
@@ -20,7 +22,6 @@ class NotesController < ApplicationController
   end
 
   def update
-    @note = Note.find params[:id]
     set_flash_for @note.update note_params
     render :edit
   end
@@ -37,7 +38,11 @@ class NotesController < ApplicationController
   private
 
   def find_note
-    @note = Note.find params[:id]
+    @note = current_user.notes.find params[:id]
+  end
+
+  def load_notes
+    @notes = current_user.notes if current_user.present?
   end
 
   def note_params
