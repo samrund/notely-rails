@@ -6,6 +6,14 @@ en:
         success: "Thanks for signing up!"
         failure: "There was a problem with your registration."
       unauthorized: "Please sign in to view that page."
+  note:
+    flash:
+      create:
+        success: "Saved!"
+        failure: "There was a problem creating your note."
+      update:
+        success: "Saved!"
+        failure: "There was a problem saving your changes."
   session:
     flash:
       create:
