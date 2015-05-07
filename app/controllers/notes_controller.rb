@@ -5,28 +5,33 @@ class NotesController < ApplicationController
     @note = Note.new
   end
 
-  def edit
+  def show
+    render :edit
   end
 
   def create
     @note = Note.new note_params
-    if @note.save
-      flash.now[:notice] = t('note.flash.create.success')
-      render :edit
-    else
-      flash.now[:alert] = t('note.flash.create.failure')
+    set_flash_for @note.save
+    if @note.errors.any?
       render :new
+    else
+      render :edit
     end
   end
 
   def update
     @note = Note.find params[:id]
-    if @note.update note_params
-      flash.now[:notice] = t('note.flash.update.success')
-    else
-      flash.now[:alert] = t('note.flash.update.failure')
-    end
+    set_flash_for @note.update note_params
     render :edit
+  end
+
+  def destroy
+    set_flash_for @note.destroy
+    if @note.errors.any?
+      render :edit
+    else
+      redirect_to new_note_path
+    end
   end
 
   private
@@ -37,5 +42,13 @@ class NotesController < ApplicationController
 
   def note_params
     params.require(:note).permit(:title, :body_html, :body_text)
+  end
+
+  def set_flash_for(action_result)
+    if action_result
+      flash[:notice] = t("note.flash.#{action_name}.success")
+    else
+      flash.now[:alert] = t("note.flash.#{action_name}.failure")
+    end
   end
 end

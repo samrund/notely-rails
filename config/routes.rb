@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   end
   get 'sign_up' => 'users#new'
 
-  resources :notes
+  resources :notes, except: :edit
 
   resources :sessions, only: :create
   delete 'logout' => 'sessions#destroy'
