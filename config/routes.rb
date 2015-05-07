@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   root 'welcome#index'
-  resources :users, only: :create do
-
-  end
+  resources :users, only: :create
   get 'sign_up' => 'users#new'
 
   resources :notes, except: :edit
@@ -10,4 +8,10 @@ Rails.application.routes.draw do
   resources :sessions, only: :create
   delete 'logout' => 'sessions#destroy'
   get 'login'     => 'sessions#new'
+
+  namespace :api, defaults: { format: 'json' } do
+    namespace :v1 do
+      resources :notes
+    end
+  end
 end
